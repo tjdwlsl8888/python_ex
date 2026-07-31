@@ -12,7 +12,7 @@ bank_bp = Blueprint(
 #newAccount_form_page                      
 @bank_bp.route('/newAccount_form', methods=['GET'])
 def newAccount_form_page():
-
+    
     mId = session.get('signedId')
     if not mId:
         return redirect(url_for('member.signin_form'))
@@ -78,7 +78,7 @@ def deposit_form_page():
     if mId not in accounts or not accounts[mId]:
         
         return redirect(url_for('newAccount_form'))
-    # confirm은 POST 전용이라 form 데이터(비밀번호 등)를 들고 가야함
+    
     return render_template('bank_forms/deposit_form.html')
 
 #deposit_confirm_process
@@ -129,7 +129,7 @@ def deposit_confirm_process():
     save_accounts(accounts)
 
     return render_template('bank_forms/deposit_result.html', dAmount = dAmount)
-
+    
 #withdrawal_form_page
 @bank_bp.route('/withdrawal_form', methods=['GET'])
 def withdrawal_form_page():
@@ -222,16 +222,16 @@ def accModify_confirm_process():
     newAPw = request.form['aPw']
     
     accounts = load_accounts()
-
+    
     userAccounts = accounts.get(mId, {})
-
+    
     if aNum not in userAccounts:
         return render_template('bank_forms/error.html', errorMsg="ACCOUNT NOT FOUND!")
-  
+    
     userAccounts[aNum]['aPw'] = newAPw
-  
+     
     save_accounts(accounts)
-
+    
     return render_template('bank_forms/accModify_result.html')
 
 @bank_bp.route('/accDelete_form', methods=['GET'])
@@ -277,21 +277,20 @@ def accList_view():
    
     if not mId:
         return redirect(url_for('member.signin_form'))
-   
-    accounts = load_accounts()
     
+    accounts = load_accounts()
+     
     if mId not in accounts or not accounts[mId]:
         
         return redirect(url_for('newAccount_form'))
-
+    
     userAccounts = accounts.get(mId, {})
-
+    
     account_lists = list(userAccounts.items())
     account_lists.reverse()
-
+    
     return render_template('bank_forms/account_list_result.html', mId = mId, accounts = account_lists)
-
-
+     
 # /bank/account_info/<aNum>
 @bank_bp.route('/account_info/<aNum>', methods=['GET'])
 def account_infos(aNum):
@@ -300,8 +299,9 @@ def account_infos(aNum):
         return redirect(url_for('member.signin_form'))
     
     accounts = load_accounts()
+
     userAccounts = accounts.get(mId, {})
-   
+    
     if aNum not in userAccounts:
         return render_template('bank_forms/error.html', errorMsg="ACCOUNT NOT FOUND!")
 
