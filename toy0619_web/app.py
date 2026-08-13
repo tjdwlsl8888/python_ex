@@ -3,7 +3,7 @@ from blueprints.member.routes import member_bp, app_bp
 from blueprints.bank.routes import bank_bp 
 
 app = Flask(__name__)
-app.secret_key = 'interplanetaryNetworkKey-DWAcademyAIOT5.1'
+app.secret_key = 'interplanetaryNetworkKey'
 
 app.register_blueprint(member_bp)
 app.register_blueprint(app_bp)
@@ -15,3 +15,5 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+
+
